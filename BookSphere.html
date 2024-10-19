@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookSphere - Clone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 15px;
+            color: white;
+            display: none; /* Hidden initially */
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .navbar .links a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .navbar .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        .navbar input[type="text"] {
+            padding: 5px;
+            font-size: 1em;
+        }
+        .navbar button {
+            padding: 5px 10px;
+            background-color: #ff9900;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 40px 20px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .hero-section .feature-box {
+            width: 30%;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .hero-section h2 {
+            margin: 0 0 10px 0;
+        }
+        /* Books Section */
+        .section-title {
+            padding: 20px;
+            font-size: 1.5em;
+            background-color: #333;
+            color: white;
+            text-align: left;
+        }
+        .book-section {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .book {
+            width: 18%;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+        .book img {
+            width: 100px;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        .book button {
+            padding: 5px;
+            width: 100%;
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        /* Footer Section */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .footer .stats {
+            display: flex;
+            justify-content: space-around;
+        }
+        .footer .stat-box {
+            text-align: center;
+        }
+        .footer .stat-box h3 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .footer .stat-box p {
+            margin: 5px 0 0 0;
+        }
+        /* Messages Section */
+        .message {
+            display: none;
+            margin: 20px;
+            padding: 10px;
+            background-color: #e0f7fa;
+            border: 1px solid #00796b;
+            color: #00796b;
+        }
+        /* Login Section */
+        .login-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+        .login-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Section -->
+    <div class="login-section" id="login-section">
+        <div class="login-form">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="handleLogin()">Login</button>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar" id="navbar">
+        <div class="logo">
+            <h1>BookSphere</h1>
+        </div>
+        <div class="links">
+            <a href="#" onclick="showMessage('My Books section opened')">My Books</a>
+            <a href="#" onclick="showMessage('Browse section opened')">Browse</a>
+            <a href="#" onclick="showMessage('Trending section opened')">Trending</a>
+            <a href="#" onclick="showMessage('Categories section opened')">Categories</a>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search books...">
+            <button onclick="searchBooks()">Search</button>
+        </div>
+    </div>
+
+    <!-- Trending Books Section -->
+    <div class="section-title" id="trending-title" style="display: none;">Trending Books</div>
+    <section class="book-section" id="trending-books" style="display: none;">
+        <div class="book" data-title="Book Title 1">
+            <img src="https://images4.penguinrandomhouse.com/cover/9780593653227" alt="Trending Book 1">
+            <p>Book Title 1</p>
+            <button onclick="readBook('Book Title 1')">Read</button>
+        </div>
+        <div class="book" data-title="Book Title 2">
+            <img src="https://images2.penguinrandomhouse.com/cover/9780593449592" alt="Trending Book 2">
+            <p>Book Title 2</p>
+            <button onclick="readBook('Book Title 2')">Read</button>
+        </div>
+        <div class="book" data-title="Book Title 3">
+            <img src="https://images2.penguinrandomhouse.com/cover/9780593436738" alt="Trending Book 3">
+            <p>Book Title 3</p>
+            <button onclick="readBook('Book Title 3')">Borrow</button>
+        </div>
+        <div class="book" data-title="Book Title 4">
+            <img src="https://images4.penguinrandomhouse.com/cover/9780593816134" alt="Trending Book 4">
+            <p>Book Title 4</p>
+            <button onclick="readBook('Book Title 4')">Read</button>
+        </div>
+        <div class="book" data-title="Book Title 5">
+            <img src="https://images1.penguinrandomhouse.com/cover/9780593448793" alt="Trending Book 5">
+            <p>Book Title 5</p>
+            <button onclick="readBook('Book Title 5')">Read</button>
+        </div>
+    </section>
+
+    <!-- Classic Books Section -->
+    <div class="section-title" id="classic-title" style="display: none;">Classic Books</div>
+    <section class="book-section" id="classic-books" style="display: none;">
+        <div class="book" data-title="Classic Title 1">
+            <img src="https://images2.penguinrandomhouse.com/cover/9780143136361" alt="Classic Book 1">
+            <p>Classic Title 1</p>
+            <button onclick="borrowBook('Classic Title 1')">Borrowed</button>
+        </div>
+        <div class="book" data-title="Classic Title 2">
+            <img src="https://images.penguinrandomhouse.com/cover/9780143138402" alt="Classic Book 2">
+            <p>Classic Title 2</p>
+            <button onclick="borrowBook('Classic Title 2')">Read</button>
+        </div>
+        <div class="book" data-title="Classic Title 3">
+            <img src="https://images4.penguinrandomhouse.com/cover/9780143136958" alt="Classic Book 3">
+            <p>Classic Title 3</p>
+            <button onclick="borrowBook('Classic Title 3')">Read</button>
+        </div>
+        <div class="book" data-title="Classic Title 4">
+            <img src="https://images4.penguinrandomhouse.com/cover/9780143138617" alt="Classic Book 4">
+            <p>Classic Title 4</p>
+            <button onclick="borrowBook('Classic Title 4')">Read</button>
+        </div>
+        <div class="book" data-title="Classic Title 5">
+            <img src="https://images.penguinrandomhouse.com/cover/9780143137993" alt="Classic Book 5">
+            <p>Classic Title 5</p>
+            <button onclick="borrowBook('Classic Title 5')">Read</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer" style="display: none;">
+        <div class="stats">
+            <div class="stat-box">
+                <h3>1,000+</h3>
+                <p>Books Available</p>
+            </div>
+            <div class="stat-box">
+                <h3>500+</h3>
+                <p>Active Users</p>
+            </div>
+            <div class="stat-box">
+                <h3>1,500+</h3>
+                <p>Books Borrowed</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.innerText = message;
+            document.body.appendChild(messageDiv);
+            messageDiv.style.display = 'block';
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+                document.body.removeChild(messageDiv);
+            }, 3000);
+        }
+
+        function searchBooks() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const books = document.querySelectorAll('.book');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.getAttribute('data-title').toLowerCase();
+                if (title.includes(query)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) {
+                showMessage('No books found.');
+            }
+        }
+
+        function readBook(title) {
+            showMessage(`You are now reading ${title}.`);
+        }
+
+        function borrowBook(title) {
+            showMessage(`${title} has been borrowed.`);
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simple validation (for demonstration purposes)
+            if (username && password) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('navbar').style.display = 'flex';
+                document.getElementById('trending-title').style.display = 'block';
+                document.getElementById('trending-books').style.display = 'flex';
+                document.getElementById('classic-title').style.display = 'block';
+                document.getElementById('classic-books').style.display = 'flex';
+                document.getElementById('footer').style.display = 'block';
+            } else {
+                showMessage('Please enter username and password.');
+            }
+        }
+    </script>
+</body>
+</html>
